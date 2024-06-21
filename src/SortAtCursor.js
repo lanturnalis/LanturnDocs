@@ -1,5 +1,5 @@
 
-function sortAtCursor() {
+function sortAtCursor(sortOrder) {
   var cursor = DocumentApp.getActiveDocument().getCursor();
 
   if (cursor && cursor.getElement()) {
@@ -25,7 +25,7 @@ function sortAtCursor() {
   }
 }
 
-function sortHeading(headingToSort, headingLevelToSort) {
+function sortHeading(headingToSort, headingLevelToSort, sortOrder) {
   var body = DocumentApp.getActiveDocument().getBody();
   var parent = headingToSort.getParent();
 
@@ -109,7 +109,7 @@ function sortHeading(headingToSort, headingLevelToSort) {
     let aText = headings[a].getText();
     let bText = headings[b].getText();
     let compareResult = aText.localeCompare(bText);
-    return compareResult;
+    return compareResult * sortOrder;
   });
 
   var index = startingIndex;
@@ -125,7 +125,7 @@ function sortHeading(headingToSort, headingLevelToSort) {
   }
 }
 
-function sortListItem(listItemToSort) {
+function sortListItem(listItemToSort, sortOrder) {
 var body = DocumentApp.getActiveDocument().getBody();
   let parent = listItemToSort.getParent();
   let nestingLevelToSort = listItemToSort.getNestingLevel();
@@ -203,7 +203,7 @@ var body = DocumentApp.getActiveDocument().getBody();
     let aText = listItems[a].getText();
     let bText = listItems[b].getText();
     let compareResult = aText.localeCompare(bText);
-    return compareResult;
+    return compareResult * sortOrder;
   });
 
   var index = startingIndex;
